@@ -1,6 +1,6 @@
 import Login from "./Login";
 import Browse from "./Browse";
-import Header from "./Header";
+
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const Body = () => {
@@ -16,8 +16,6 @@ const Body = () => {
   ]);
   return (
     <div className="text-center">
-      <Header />
-
       <RouterProvider router={appRouter} />
     </div>
   );
