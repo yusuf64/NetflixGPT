@@ -6,6 +6,7 @@
 
   - Signin/Signup Form
   - Redirect to Browse
+  
 
 - Browse Page (After Authentication)
 
