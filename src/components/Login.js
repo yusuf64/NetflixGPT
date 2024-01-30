@@ -24,6 +24,14 @@ const Login = () => {
           <p className="text-left text-white font-bold text-3xl pb-5">
             {signIn ? "Sign In " : "Sign Up"}
           </p>
+          {!signIn && (
+            <input
+              type="text"
+              placeholder="Full Name"
+              className="p-3 m-2 w-full mx-auto rounded-md bg-transparent border-gray-500 border-[1px]"
+            />
+          )}
+
           <input
             type="text"
             placeholder="Email Address"
@@ -38,11 +46,14 @@ const Login = () => {
             type="submit"
             className="bg-red-600 inline-block w-full mx-auto my-8 py-3 rounded-md text-white font-bold "
           >
-            {signIn ? "Sign In" : "Sign Up" }
+            {signIn ? "Sign In" : "Sign Up"}
           </button>
 
-          <p className="cursor-pointer text-white" onClick={handleClick}>
-            {signIn ? "Signup Now" : "Already Registered Sigin Now"}
+          <p
+            className="cursor-pointer text-white text-left"
+            onClick={handleClick}
+          >
+            {signIn ? "New to Netflix ? Sign up Now" : "Already Registered ? Sigin Now"}
           </p>
         </form>
       </div>
