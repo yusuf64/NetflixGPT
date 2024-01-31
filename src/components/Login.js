@@ -7,16 +7,36 @@ import { checkValidData } from "../utils/validate";
 const Login = () => {
   const [signIn, setSignIn] = useState(true);
 
+  const [errors, setErrors] = useState({
+    email: null,
+    password: null,
+    name: null,
+  });
+
   const handleClick = () => {
     setSignIn(!signIn);
   };
 
+  const name = useRef(null);
   const email = useRef(null);
   const password = useRef(null);
 
+  console.log(name?.current?.value);
+
   const handleSubmit = () => {
-    checkValidData(email.current.value, password.current.value);
-    console.log(email.current.value, password.current.value);
+    const message = checkValidData(
+      email.current.value,
+      password.current.value,
+      name?.current?.value
+    );
+
+    setErrors({
+      email: message.email,
+      password: message.password,
+      name: message?.name,
+    });
+    // console.log(email.current.value, password.current.value);
+    // console.log(message);
   };
 
   return (
@@ -37,11 +57,15 @@ const Login = () => {
             {signIn ? "Sign In " : "Sign Up"}
           </p>
           {!signIn && (
-            <input
-              type="text"
-              placeholder="Full Name"
-              className="p-3 m-2 w-full mx-auto  rounded-md bg-transparent border-gray-500 border-[1px]"
-            />
+            <>
+              <input
+                type="text"
+                ref={name}
+                placeholder="Full Name"
+                className="p-3 m-2 w-full mx-auto  rounded-md bg-transparent border-gray-500 border-[1px] text-white"
+              />
+              <p className="text-red-500 text-left">{errors.name}</p>
+            </>
           )}
 
           <input
@@ -50,12 +74,14 @@ const Login = () => {
             placeholder="Email Address"
             className="p-3 m-2 w-full mx-auto text-white rounded-md bg-transparent border-gray-500 border-[1px]"
           />
+          <p className="text-red-500 text-left">{errors.email}</p>
           <input
             type="password"
             ref={password}
             placeholder="Password"
             className="p-4 m-2 w-full mx-auto text-white rounded-md bg-transparent border-gray-500 border-[1px]"
           />
+          <p className="text-red-500 text-left">{errors.password}</p>
           <button
             type="submit"
             onClick={handleSubmit}
