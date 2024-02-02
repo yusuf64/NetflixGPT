@@ -6,7 +6,8 @@
 
   - Signin/Signup Form
   - Redirect to Browse
-  
+  - FireBAse Setup
+  - Deploying our App to Firebase
 
 - Browse Page (After Authentication)
 

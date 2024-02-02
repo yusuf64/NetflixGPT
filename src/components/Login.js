@@ -2,9 +2,15 @@ import { useRef, useState } from "react";
 import { LOGIN_PAGE_BANNER } from "../utils/constant";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+
 // import { checkValidData } from "../utils/validate";
 
 const Login = () => {
+  // console.log(auth);
+
+  // console.log(auth);
   const [signIn, setSignIn] = useState(true);
 
   const [errors, setErrors] = useState({
@@ -21,7 +27,7 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
 
-  console.log(name?.current?.value);
+  // console.log(name?.current?.value);
 
   const handleSubmit = () => {
     const message = checkValidData(
@@ -30,13 +36,35 @@ const Login = () => {
       name?.current?.value
     );
 
-    setErrors({
-      email: message.email,
-      password: message.password,
-      name: message?.name,
-    });
-    // console.log(email.current.value, password.current.value);
-    // console.log(message);
+    console.log("message", message.email);
+
+    if (Object.keys(message).length === 0) {
+      setErrors({
+        email: email.current.value,
+        password: password.current.value,
+        name: name?.current?.value,
+      });
+
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed up
+          const user = userCredential.user;
+
+          console.log(user);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          console.log(errorCode, errorMessage);
+          // ..
+        });
+    }
   };
 
   return (
@@ -50,7 +78,7 @@ const Login = () => {
         <form
           onSubmit={(e) => e.preventDefault()}
           action=""
-          autocomplete="on"
+          autoComplete="on"
           className="w-1/3 flex flex-col bg-black bg-opacity-80 py-14 px-20 rounded-md"
         >
           <p className="text-left text-white font-bold text-3xl pb-5">
