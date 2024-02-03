@@ -3,7 +3,11 @@ import { LOGIN_PAGE_BANNER } from "../utils/constant";
 import Header from "./Header";
 import { checkValidData } from "../utils/validate";
 import { auth } from "../utils/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword, updateProfile
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 // import { checkValidData } from "../utils/validate";
 
@@ -18,6 +22,8 @@ const Login = () => {
     password: null,
     name: null,
   });
+
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setSignIn(!signIn);
@@ -45,25 +51,61 @@ const Login = () => {
         name: name?.current?.value,
       });
 
-      createUserWithEmailAndPassword(
-        auth,
-        email.current.value,
-        password.current.value
-      )
-        .then((userCredential) => {
-          // Signed up
-          const user = userCredential.user;
+      if (!signIn) {
+        createUserWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            // Signed up
+            const user = userCredential.user;
 
-          console.log(user);
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
+              updateProfile(user, {
+                displayName: name.current.value,
+              })
+                .then(() => {
+                  // Profile updated successfully
+                  console.log("User's profile updated successfully");
+                })
+                .catch((error) => {
+                  // Error updating profile
+                  console.error("Error updating user's profile:", error);
+                });
 
-          console.log(errorCode, errorMessage);
-          // ..
-        });
+            navigate("/browse");
+
+            console.log(user);
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            console.log(errorCode, errorMessage);
+            // ..
+          });
+      } else {
+        signInWithEmailAndPassword(
+          auth,
+          email.current.value,
+          password.current.value
+        )
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+
+            navigate("/browse");
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+
+            console.log(errorCode, errorMessage);
+          });
+      }
     }
   };
 
