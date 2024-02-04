@@ -5,9 +5,11 @@ import { checkValidData } from "../utils/validate";
 import { auth } from "../utils/firebase";
 import {
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword, updateProfile
+  signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 // import { checkValidData } from "../utils/validate";
 
@@ -17,13 +19,15 @@ const Login = () => {
   // console.log(auth);
   const [signIn, setSignIn] = useState(true);
 
-  const [errors, setErrors] = useState({
+  const [errorss, setErrors] = useState({
     email: null,
     password: null,
     name: null,
   });
 
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+
 
   const handleClick = () => {
     setSignIn(!signIn);
@@ -44,6 +48,8 @@ const Login = () => {
 
     console.log("message", message.email);
 
+
+
     if (Object.keys(message).length === 0) {
       setErrors({
         email: email.current.value,
@@ -61,21 +67,28 @@ const Login = () => {
             // Signed up
             const user = userCredential.user;
 
-              updateProfile(user, {
-                displayName: name.current.value,
+            updateProfile(user, {
+              displayName: name.current.value,
+            })
+              .then(() => {
+                const { uid, email, displayName } = user;
+                dispatch(
+                  addUser({
+                    uid: uid,
+                    email: email,
+                    displayName: displayName,
+                  })
+                );
+
+              
+                // Profile updated successfully
+                console.log("User's profile updated successfully");
               })
-                .then(() => {
-                  // Profile updated successfully
-                  console.log("User's profile updated successfully");
-                })
-                .catch((error) => {
-                  // Error updating profile
-                  console.error("Error updating user's profile:", error);
-                });
+              .catch((error) => {
+                // Error updating profile
+                console.error("Error updating user's profile:", error);
+              });
 
-            navigate("/browse");
-
-            console.log(user);
             // ...
           })
           .catch((error) => {
@@ -96,7 +109,7 @@ const Login = () => {
             const user = userCredential.user;
             console.log(user);
 
-            navigate("/browse");
+    
             // ...
           })
           .catch((error) => {
@@ -106,6 +119,12 @@ const Login = () => {
             console.log(errorCode, errorMessage);
           });
       }
+    }else{
+      setErrors({
+        email: message.email, 
+        name: message.name,
+        password: message.password
+      })
     }
   };
 
@@ -134,7 +153,7 @@ const Login = () => {
                 placeholder="Full Name"
                 className="p-3 m-2 w-full mx-auto  rounded-md bg-transparent border-gray-500 border-[1px] text-white"
               />
-              <p className="text-red-500 text-left">{errors.name}</p>
+              <p className="text-red-500 text-left">{errorss.name}</p>
             </>
           )}
 
@@ -144,14 +163,14 @@ const Login = () => {
             placeholder="Email Address"
             className="p-3 m-2 w-full mx-auto text-white rounded-md bg-transparent border-gray-500 border-[1px]"
           />
-          <p className="text-red-500 text-left">{errors.email}</p>
+          <p className="text-red-500 text-left">{errorss.email}</p>
           <input
             type="password"
             ref={password}
             placeholder="Password"
             className="p-4 m-2 w-full mx-auto text-white rounded-md bg-transparent border-gray-500 border-[1px]"
           />
-          <p className="text-red-500 text-left">{errors.password}</p>
+          <p className="text-red-500 text-left">{errorss.password}</p>
           <button
             type="submit"
             onClick={handleSubmit}

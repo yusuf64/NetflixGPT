@@ -11,9 +11,9 @@ import { useDispatch } from "react-redux";
 
 const Body = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      console.log(user.displayName);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, displayName } = user;
         dispatch(
@@ -27,6 +27,8 @@ const Body = () => {
         dispatch(removeUser());
       }
     });
+
+    return () => unsubscribe();
   }, []);
   const appRouter = createBrowserRouter([
     {

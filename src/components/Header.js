@@ -1,19 +1,40 @@
 import { HEADER_LOGO } from "../utils/constant";
 import { useDispatch } from "react-redux";
-import { removeUser } from "../utils/userSlice";
+import { removeUser, addUser } from "../utils/userSlice";
 import { auth } from "../utils/firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, email, displayName } = user;
+        dispatch(
+          addUser({
+            uid: uid,
+            email: email,
+            name: displayName,
+          })
+        );
+        navigate("/browse");
+      } else {
+        dispatch(removeUser());
+        navigate("/login");
+      }
+    });
+  }, []);
+
   const handleClick = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-        navigate("/login");
+  
 
         // Sign-out successful.
       })
