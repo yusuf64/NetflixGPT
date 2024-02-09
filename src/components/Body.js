@@ -41,7 +41,7 @@ const Body = () => {
     },
   ]);
   return (
-    <div className="text-center">
+    <div className="main-container">
       <RouterProvider router={appRouter} />
     </div>
   );
