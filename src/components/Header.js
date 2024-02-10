@@ -34,7 +34,6 @@ const Header = () => {
     signOut(auth)
       .then(() => {
         dispatch(removeUser());
-  
 
         // Sign-out successful.
       })
@@ -43,10 +42,10 @@ const Header = () => {
       });
   };
   return (
-    <div className="main-wrapper absolute z-10 px-12 py-2 bg-gradient-to-b from-black w-full">
+    <div className="main-wrapper absolute z-30 px-12 py-2 bg-gradient-to-b from-black w-full  ">
       <div className="container flex justify-between">
         <div className="navbar">
-          <img src={HEADER_LOGO} alt="" className="w-44" />
+          <img src={HEADER_LOGO} alt="" className="w-44 z-30" />
         </div>
 
         <div className="button-wrapper">

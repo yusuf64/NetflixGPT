@@ -12,3 +12,5 @@ export const API_OPTIONS = {
       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjYTdkMTY4OGU4MmM3Nzg1N2Q0OTg0YTlhZDUwMTQwYiIsInN1YiI6IjY1YmZlZTZlMWRiYzg4MDE3YzFmNTE1OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.9j5mU4gILasle7_TZKQoV3JJ3jtmwuOuR9Hw-xFZhXU",
   },
 };
+
+export const randnumber = Math.floor(Math.random() * 19) + 1;
