@@ -14,3 +14,5 @@ export const API_OPTIONS = {
 };
 
 export const randnumber = Math.floor(Math.random() * 19) + 1;
+
+export const IMG_URL = "https://image.tmdb.org/t/p/w500/";
