@@ -1,10 +1,11 @@
 import React from "react";
 import { IMG_URL } from "../utils/constant";
 
-const MovieCard = ({ posterpath }) => {
+const MovieCard = ({ posterpath, alttext }) => {
+  // console.log("coming from movie card", posterpath, altext);
   return (
-    <div>
-      <img src={IMG_URL + posterpath} />
+    <div className="w-full px-3 rounded-md">
+      <img className="rounded-sm" alt={alttext} src={IMG_URL + posterpath} />
     </div>
   );
 };

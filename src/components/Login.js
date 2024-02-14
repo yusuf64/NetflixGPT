@@ -46,7 +46,7 @@ const Login = () => {
       name?.current?.value
     );
 
-    console.log("message", message.email);
+    // console.log("message", message.email);
 
 
 
@@ -82,11 +82,11 @@ const Login = () => {
 
               
                 // Profile updated successfully
-                console.log("User's profile updated successfully");
+                // console.log("User's profile updated successfully");
               })
               .catch((error) => {
                 // Error updating profile
-                console.error("Error updating user's profile:", error);
+                // console.error("Error updating user's profile:", error);
               });
 
             // ...
@@ -95,7 +95,7 @@ const Login = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
 
-            console.log(errorCode, errorMessage);
+            // console.log(errorCode, errorMessage);
             // ..
           });
       } else {
@@ -107,7 +107,7 @@ const Login = () => {
           .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            console.log(user);
+            // console.log(user);
 
     
             // ...
@@ -116,7 +116,7 @@ const Login = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
 
-            console.log(errorCode, errorMessage);
+            // console.log(errorCode, errorMessage);
           });
       }
     }else{

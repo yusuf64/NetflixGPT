@@ -10,6 +10,6 @@ const appStore = configureStore({
   },
 });
 
-console.log(appStore);
+// console.log(appStore);
 
 export default appStore;

@@ -22,7 +22,7 @@ const useFetchTrailer = (id) => {
 
       dispatch(addTrailer(finalt));
 
-      console.log(finalt);
+      // console.log(finalt);
 
       // console.log("dd", dd[0].key);
 

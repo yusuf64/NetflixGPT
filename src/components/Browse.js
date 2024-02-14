@@ -5,6 +5,7 @@ import SecondaryContainer from "./SecondaryContainer";
 
 const Browse = () => {
   useFetchMovie();
+  
 
   return (
     <div>

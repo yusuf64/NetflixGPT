@@ -1,7 +1,7 @@
 import React from "react";
 
 const VideoTitle = ({ title, overview, id }) => {
-  console.log("Id from videotitle ", id, title);
+  // console.log("Id from videotitle ", id, title);
   return (
     <div className="overflow-hidden py-52 px-14 video-wrapper absolute z-20 bg-gradient-to-r from-black w-full aspect-video">
       <div className="movie-info text-white ">
